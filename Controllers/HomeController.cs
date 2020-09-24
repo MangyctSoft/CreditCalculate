@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CreditApplication.Models;
+using CreditApplication.Core.Domain;
 
 namespace CreditApplication.Controllers
 {
@@ -32,6 +33,12 @@ namespace CreditApplication.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult Сalculate(Credit credit)
+        {
+            return Content($"Sum = {credit.Sum} Term = {credit.Term} TermCredit = {credit.TermCredit} StacksCredit = {credit.StacksCredit}");
         }
     }
 }

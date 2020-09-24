@@ -1,8 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model CreditApplication.Core.Domain.Credit
+@{
+    ViewData["Title"] = "Credit Application";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <form asp-controller="Home" asp-action="Сalculate" method="post">
+
+        <p><label class="">Сумма кредита:</label></p>
+        <p><input type="text" class="" asp-for="Sum" placeholder="Сумма кредита"></p>
+        <p><label class="">Срок кредит:</label></p>
+        <p><input type="text" class="" asp-for="Term" placeholder="Срок кредит"></p>
+        <p><label class="">Месяцы или дни:</label></p>
+        <p><input type="text" class="" asp-for="TermCredit" placeholder="Месяцы или дни:"></p>
+        <p><label class="">Ставка:</label></p>
+        <p><input type="text" class="" asp-for="StacksCredit" placeholder="Ставка"></p>
+
+        <p><input type="submit" value="Update" class="btn" /></p>
+    </form>
+
+
