@@ -11,5 +11,6 @@ namespace CreditApplication.Models.Home
     {
         public IEnumerable<SelectListItem> TermTypes { get; set; }
         public IEnumerable<SelectListItem> StacksTypes { get; set; }
+        public bool IsDayPayment { get; set; }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace CreditApplication.Core.Domain
 {
@@ -10,25 +8,59 @@ namespace CreditApplication.Core.Domain
     /// </summary>
     public class Credit
     {
+        private const int DAY_OF_MOUNTH = 30;
+
         /// <summary>
         /// Сумма кредита.
         /// </summary>
+        [Required]
         public decimal Sum { get; set; }
+       
+        private decimal term;
         /// <summary>
         /// Срок кредита.
         /// </summary>
-        public int Term{ get; set; }
+        [Required]
+        public decimal Term 
+        { 
+            get 
+            {
+                return TermCredit == TermCredit.Day ? term / DAY_OF_MOUNTH : term;
+            } 
+            set
+            {
+                term = value;
+            }
+        }
+        /// <summary>
+        /// Срока кредита, для вывода во вью.
+        /// </summary>
+        public string TermText
+        {
+            get
+            {
+                return term.ToString();
+            }            
+        }
         /// <summary>
         /// Тип срока кредита.
         /// </summary>
-        public TermCredit TermCredit { get; set; }
+        [Required]
+        public TermCredit TermCredit { get; set; } = TermCredit.Month;
         /// <summary>
         /// Ставка кредита.
         /// </summary>
+        [Required]
         public decimal Stacks { get; set; }
         /// <summary>
         /// Тип ставки кредита.
         /// </summary>
+        [Required]
         public StacksCredit StacksCredit { get; set; }
+        /// <summary>
+        /// Шаг платежа в днях.
+        /// </summary>
+        public int StepPayment {get;set;}
+
     }
 }

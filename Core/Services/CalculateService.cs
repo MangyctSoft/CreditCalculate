@@ -12,7 +12,12 @@ namespace CreditApplication.Core.Services
         {
             var result = new List<CreditResult>();
 
-            var k = credit.Stacks / 100 / 12;
+            //if (credit.TermCredit == TermCredit.Day)
+            //{
+            //    credit.Term /= DAY_OF_MOUNTH; 
+            //}
+
+            var k = credit.Stacks / 100 / credit.Term;
 
             var payment = GetMonthlyPayments(credit.Sum, k, credit.Term);
 
@@ -22,12 +27,21 @@ namespace CreditApplication.Core.Services
             var year = DateTime.Now.Year;
             int daysOfMounth = 0;
 
-            for (int i = 1; i <= credit.Term; i++)
+            var term = Math.Ceiling(credit.Term);
+
+            for (int i = 1; i <= term; i++)
             {
                 daysOfMounth += DateTime.DaysInMonth(year, month);
 
                 var percent = GetPrecentPayments(debt, k);
                 var body = GetBodyPayments(payment, percent);
+                debt = GetDebt(debt, body);
+
+                if (debt < 0)
+                {
+                    body += debt;
+                    debt = 0;
+                }
 
                 result.Add(new CreditResult
                 {
@@ -35,7 +49,7 @@ namespace CreditApplication.Core.Services
                     PaymentDate = DateTime.Now.AddDays(daysOfMounth),
                     PaymentBody = body,
                     PaymentPercent = percent,
-                    Debt = GetDebt(ref debt, body)
+                    Debt = debt
                 });
 
                 month = month < 13 ? month++ : 1;
@@ -84,7 +98,7 @@ namespace CreditApplication.Core.Services
         /// <param name="sP">Сумма текущей задолженности по кредиту.</param>
         /// <param name="sA">Cумма в аннуитетном платеже.</param>
         /// <returns></returns>
-        private decimal GetDebt(ref decimal sP, decimal sA)
+        private decimal GetDebt(decimal sP, decimal sA)
         { 
             sP = sP - sA;
             return sP;

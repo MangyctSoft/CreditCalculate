@@ -1,8 +1,9 @@
-﻿@model IEnumerable<CreditApplication.Core.Domain.CreditResult>
+﻿@model CreditApplication.Models.Home.CalculateViewModel
 @{
     ViewData["Title"] = "Сalculate";
+    string info = Model.Credit.TermCredit == CreditApplication.Core.Domain.TermCredit.Day ? "дней." : "месяцев.";
 }
-
+    <h4>График платежей на @Model.Credit.TermText @info</h4>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -14,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.CreditResults)
         {
         <tr>
             <td>@item.Number</td>
@@ -24,9 +25,10 @@
             <td>@item.Debt.ToString("F2")</td>
         </tr>
         }
-        <tr>
-            <td colspan="5">Итого переплаты по кредиту: @Model.Sum(s => s.PaymentPercent).ToString("F2")</td>
-        </tr>
+    <tr>
+        <td colspan="2">Сумма: @Model.CreditResults.Sum(s => s.PaymentBody).ToString("F2")</td>
+        <td colspan="3">Итого переплаты по кредиту: @Model.CreditResults.Sum(s => s.PaymentPercent).ToString("F2")</td>
+    </tr>
     </tbody>
 
 </table>

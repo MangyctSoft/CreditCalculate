@@ -27,12 +27,13 @@ namespace CreditApplication.Controllers
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(bool isDayPayment = false)
         {
             var vm = new IndexViewModel
             {
                 TermTypes = _calculateModelService.GetTermType(),
-                StacksTypes = _calculateModelService.GetStacksType()
+                StacksTypes = _calculateModelService.GetStacksType(),
+                IsDayPayment = isDayPayment
             };
             return View(vm);
         }
@@ -55,20 +56,12 @@ namespace CreditApplication.Controllers
         [HttpPost]
         public IActionResult Сalculate(Credit credit)
         {
-            var creditResults = _calculateService.GetCreditResult(credit);
-            return View(creditResults);
-        }
-
-       
-
-        public IActionResult Result(IEnumerable<CreditResult> creditResults)
-        {
-            if (creditResults == null)
+            var vm = new CalculateViewModel
             {
-                return RedirectToAction("Index", "Home");
-            }
-
-            return View();            
-        }
+                Credit = credit,
+                CreditResults = _calculateService.GetCreditResult(credit)
+            };          
+            return View(vm);
+        }       
     }
 }
