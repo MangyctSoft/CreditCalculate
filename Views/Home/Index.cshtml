@@ -7,14 +7,14 @@
     <form asp-controller="Home" asp-action="Сalculate" method="post">
 
         <p><label class="">Сумма кредита:</label></p>
-        <p><input type="text" class="" asp-for="@credit.Sum" /></p>
+        <p><input type="text" class="" asp-for="@credit.Sum" value="50000"/></p>
 
         <p><label class="">Срок кредит:</label></p>
-        <p><input type="text" class="" asp-for="@credit.Term" />
+        <p><input type="text" class="" asp-for="@credit.Term" value="12"/>
         <select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" placeholder="Месяцы или дни:"></select></p>
 
         <p><label class="">Ставка в %:</label></p>
-        <p><input type="text" class="" asp-for="@credit.Stacks" />
+        <p><input type="text" class="" asp-for="@credit.Stacks" value="22"/>
         <select class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes" placeholder="Ставка"></select></p>
 
         <p><input type="submit" value="Рассчитать" class="btn" /></p>
