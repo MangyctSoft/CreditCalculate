@@ -7,21 +7,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CreditApplication.Models;
 using CreditApplication.Core.Domain;
+using CreditApplication.Models.Home;
+using CreditApplication.Core.Services;
 
 namespace CreditApplication.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private ICalculateModelService _calculateModelService;
+        public HomeController(ILogger<HomeController> logger, ICalculateModelService calculateModelService)
         {
             _logger = logger;
+            _calculateModelService = calculateModelService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var vm = new IndexViewModel
+            {
+                Credit = new Credit(),
+                TermTypes = _calculateModelService.GetTermType(),
+                StacksTypes = _calculateModelService.GetStacksType()
+            };
+            return View(vm);
         }
 
         public IActionResult Privacy()

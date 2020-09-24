@@ -1,20 +1,21 @@
-﻿@model CreditApplication.Core.Domain.Credit
+﻿@model CreditApplication.Models.Home.IndexViewModel
 @{
     ViewData["Title"] = "Credit Application";
+    var credit = new CreditApplication.Core.Domain.Credit();
 }
 
     <form asp-controller="Home" asp-action="Сalculate" method="post">
 
         <p><label class="">Сумма кредита:</label></p>
-        <p><input type="text" class="" asp-for="Sum" placeholder="Сумма кредита"></p>
+        <p><input type="text" class="" asp-for="@credit.Sum" placeholder="Сумма кредита"/></p>
         <p><label class="">Срок кредит:</label></p>
-        <p><input type="text" class="" asp-for="Term" placeholder="Срок кредит"></p>
+        <p><input type="text" class="" asp-for="@credit.Term" placeholder="Срок кредит"/></p>
         <p><label class="">Месяцы или дни:</label></p>
-        <p><input type="text" class="" asp-for="TermCredit" placeholder="Месяцы или дни:"></p>
+        <p><select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" placeholder="Месяцы или дни:"></select></p>
         <p><label class="">Ставка:</label></p>
-        <p><input type="text" class="" asp-for="StacksCredit" placeholder="Ставка"></p>
+        <p><select class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes" placeholder="Ставка"></select></p>
 
-        <p><input type="submit" value="Update" class="btn" /></p>
+        <p><input type="submit" value="Рассчитать" class="btn" /></p>
     </form>
 
 
