@@ -9,7 +9,6 @@ namespace CreditApplication.Models.Home
 {
     public class IndexViewModel
     {
-        public Credit Credit { get; set; }
         public IEnumerable<SelectListItem> TermTypes { get; set; }
         public IEnumerable<SelectListItem> StacksTypes { get; set; }
     }

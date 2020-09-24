@@ -7,13 +7,15 @@
     <form asp-controller="Home" asp-action="Сalculate" method="post">
 
         <p><label class="">Сумма кредита:</label></p>
-        <p><input type="text" class="" asp-for="@credit.Sum" placeholder="Сумма кредита"/></p>
+        <p><input type="text" class="" asp-for="@credit.Sum" /></p>
+
         <p><label class="">Срок кредит:</label></p>
-        <p><input type="text" class="" asp-for="@credit.Term" placeholder="Срок кредит"/></p>
-        <p><label class="">Месяцы или дни:</label></p>
-        <p><select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" placeholder="Месяцы или дни:"></select></p>
-        <p><label class="">Ставка:</label></p>
-        <p><select class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes" placeholder="Ставка"></select></p>
+        <p><input type="text" class="" asp-for="@credit.Term" />
+        <select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" placeholder="Месяцы или дни:"></select></p>
+
+        <p><label class="">Ставка в %:</label></p>
+        <p><input type="text" class="" asp-for="@credit.Stacks" />
+        <select class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes" placeholder="Ставка"></select></p>
 
         <p><input type="submit" value="Рассчитать" class="btn" /></p>
     </form>

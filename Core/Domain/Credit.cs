@@ -25,6 +25,10 @@ namespace CreditApplication.Core.Domain
         /// <summary>
         /// Ставка кредита.
         /// </summary>
+        public decimal Stacks { get; set; }
+        /// <summary>
+        /// Тип ставки кредита.
+        /// </summary>
         public StacksCredit StacksCredit { get; set; }
     }
 }

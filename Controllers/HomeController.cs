@@ -26,7 +26,6 @@ namespace CreditApplication.Controllers
         {
             var vm = new IndexViewModel
             {
-                Credit = new Credit(),
                 TermTypes = _calculateModelService.GetTermType(),
                 StacksTypes = _calculateModelService.GetStacksType()
             };
@@ -47,7 +46,9 @@ namespace CreditApplication.Controllers
         [HttpPost]
         public IActionResult Сalculate(Credit credit)
         {
-            return Content($"Sum = {credit.Sum} Term = {credit.Term} TermCredit = {credit.TermCredit} StacksCredit = {credit.StacksCredit}");
+
+
+            return Content($"Sum = {credit.Sum} Term = {credit.Term} TermCredit = {credit.TermCredit} Stacks = {credit.Stacks} StacksCredit = {credit.StacksCredit}");
         }
     }
 }
