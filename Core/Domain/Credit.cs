@@ -13,14 +13,16 @@ namespace CreditApplication.Core.Domain
         /// <summary>
         /// Сумма кредита.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Поле не может быть пустым.")]
+        [Range(500, 5_000_000, ErrorMessage = "Недопустимая сумма кредита.")]
         public decimal Sum { get; set; }
        
         private decimal term;
         /// <summary>
         /// Срок кредита.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Поле не может быть пустым.")]
+        [Range(3, 1_000, ErrorMessage = "Недопустимый срок кредита.")]
         public decimal Term 
         { 
             get => TermCredit == TermCredit.Day ? StacksCredit == StacksCredit.InYear ? term / DAY_OF_MOUNTH : term : term;
@@ -47,7 +49,8 @@ namespace CreditApplication.Core.Domain
         /// <summary>
         /// Ставка кредита.
         /// </summary>
-        [Required]
+        [Required(ErrorMessage = "Поле не может быть пустым.")]
+        [Range(0.05, 1_000, ErrorMessage = "Недопустимая ставка по кредиту.")]
         public decimal Stacks { get; set; }
         /// <summary>
         /// Тип ставки кредита.

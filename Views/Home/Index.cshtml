@@ -1,34 +1,44 @@
 ﻿@model CreditApplication.Models.Home.IndexViewModel
 @{
     ViewData["Title"] = "Credit Application";
-    var credit = new CreditApplication.Core.Domain.Credit(); 
+    var credit = new CreditApplication.Core.Domain.Credit();
 }
+<div class="col-4">
+    <form asp-antiforgery="true" asp-controller="Home" asp-action="Сalculate" method="post">
 
-    <form asp-controller="Home" asp-action="Сalculate" method="post">
+        <p class="validation" asp-validation-summary="ModelOnly"></p>
 
-        <p><label class="">Сумма кредита:</label></p>
-        <p><input type="text" class="" asp-for="@credit.Sum" value="50000" /></p>
-
-        <p><label class="">Срок кредит:</label></p>
-        <p>
-            <input type="text" class="" asp-for="@credit.Term"/>
-            <select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" ></select>
-        </p>
-
-        <p><label class="">Ставка в %:</label></p>
-        <p>
-            <input type="text" class="" asp-for="@credit.Stacks" value="22" />
-            <select id="changeStacks" class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes"></select>
-        </p>
-      
-            <p id="stepPayment" class="visually--hidden">
-                    <label class="">Шаг платежа в днях:</label>
-                    <select class="" asp-for="@credit.StepPayment" asp-items="@Model.StepPaymentTypes"></select>
-        </p>
+        <p class="mb-1"><h5><label>Сумма кредита:</label></h5></p>
+        <p class="mb-0"><input id="sumPayment" type="text" class="form-control" asp-for="@credit.Sum" /></p>
+        <p class="mt-0"><span class="ml-3 text-danger" asp-validation-for="@credit.Sum"></span></p>
         
 
+        <p class="mb-1"><h5><label>Срок кредит:</label></h5></p>
+        <p class="input-group mb-0">
+            <input id="termPayment" type="text" class="input-group-prepend form-control" asp-for="@credit.Term" />
+            <select class="input-group-append" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes"></select>
+        </p>
+            <p class="mt-0"><span class="ml-3 text-danger" asp-validation-for="@credit.Term"></span></p>
 
-        <p><input id="calculate" type="submit" value="Рассчитать" class="btn btn-light" /></p>
+        <p class="mb-1"><h5><label>Ставка в %:</label></h5></p>
+        <p class="input-group mb-0">
+            <input id="stacksPayment" type="text" class="input-group-prepend form-control" asp-for="@credit.Stacks" />
+            <select id="changeStacks" class="input-group-append" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes"></select>
+        </p>
+            <p class="mt-0"><span class="ml-3 text-danger" asp-validation-for="@credit.Stacks"></span></p>
+
+        <p id="stepPayment" class="visually--hidden input-group">
+            <span class="input-group-prepend">
+                <span class="input-group-text">Шаг платежа в днях:</span>
+            </span>
+            <select class="input-group-append" asp-for="@credit.StepPayment" asp-items="@Model.StepPaymentTypes"></select>
+        </p>
+
+        <p><input id="calculate" type="submit" value="Рассчитать" class="btn btn-secondary" /></p>
     </form>
+</div>
+@section scripts{
 
-
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
