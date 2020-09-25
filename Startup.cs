@@ -25,7 +25,7 @@ namespace CreditApplication
         {
             services.AddControllersWithViews();
             services.AddScoped<ICalculateModelService, CalculateModelService>();
-            services.AddScoped<ICalculateService, CalculateService>();
+            services.AddScoped<ICalculateService, AnnuityCalculateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

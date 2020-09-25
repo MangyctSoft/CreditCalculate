@@ -8,6 +8,7 @@ namespace CreditApplication.Core.Services
 {
     public interface ICalculateService
     {
-        IEnumerable<CreditResult> GetCreditResult(Credit credit);
+        IEnumerable<CreditResult> GetCreditMounthResult(Credit credit);
+        IEnumerable<CreditResult> GetCreditDaysResult(Credit credit);
     }
 }

@@ -10,5 +10,6 @@ namespace CreditApplication.Core.Services
     {
         IEnumerable<SelectListItem> GetTermType();
         IEnumerable<SelectListItem> GetStacksType();
+        IEnumerable<SelectListItem> GetStepPaymentType();
     }
 }

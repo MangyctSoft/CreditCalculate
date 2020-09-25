@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace CreditApplication.Core.Services
 {
-    public class CalculateService : ICalculateService
+    /// <summary>
+    /// Сервис кредитный калькулятор.
+    /// </summary>
+    public class AnnuityCalculateService : ICalculateService
     {
-        public IEnumerable<CreditResult> GetCreditResult(Credit credit)
+        /// <summary>
+        /// Расчет кредита с годовой ставкой ежемесячно.
+        /// </summary>
+        /// <param name="credit">Данные по кредиту.</param>
+        public IEnumerable<CreditResult> GetCreditMounthResult(Credit credit)
         {
-            var result = new List<CreditResult>();
-
-            //if (credit.TermCredit == TermCredit.Day)
-            //{
-            //    credit.Term /= DAY_OF_MOUNTH; 
-            //}
-
+            var result = new List<CreditResult>();           
+          
             var k = credit.Stacks / 100 / credit.Term;
-
+           
             var payment = GetMonthlyPayments(credit.Sum, k, credit.Term);
 
             var debt = credit.Sum;
@@ -60,6 +62,74 @@ namespace CreditApplication.Core.Services
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Расчет кредита с ежедневной ставкой по указанному периоду платежа.
+        /// </summary>
+        /// <param name="credit">Данные по кредиту.</param>
+        public IEnumerable<CreditResult> GetCreditDaysResult(Credit credit)
+        {
+            var temp = new List<CreditResult>();
+
+            var k = credit.Stacks / 100;
+            var term = credit.TermCredit == TermCredit.Month ? credit.Term * 30 : credit.Term;
+            var payment = GetMonthlyPayments(credit.Sum, k, term);
+
+            var debt = credit.Sum;           
+
+            for (int i = 1; i <= term; i++)
+            {
+                var percent = GetPrecentPayments(debt, k);
+                var body = GetBodyPayments(payment, percent);
+                debt = GetDebt(debt, body);
+
+                if (debt < 0)
+                {
+                    body += debt;
+                    debt = 0;
+                }
+
+                temp.Add(new CreditResult
+                {
+                    Number = i,
+                    PaymentDate = DateTime.Now.AddDays(i),
+                    PaymentBody = body,
+                    PaymentPercent = percent,
+                    Debt = debt
+                });
+            }
+
+            var results = new List<CreditResult>();
+            temp.OrderBy(o => o.Number);
+            int count = 1;
+            int skip = 0;
+
+            debt = credit.Sum;
+
+            foreach (var item in temp)
+            {
+                if (item.Number % credit.StepPayment == 0 || item.Number == temp.Count)
+                {
+                    var percent = temp.Skip(skip).Take(credit.StepPayment).Sum(s => s.PaymentPercent);
+                    var body = temp.Skip(skip).Take(credit.StepPayment).Sum(s => s.PaymentBody);
+                    debt = GetDebt(debt, body);
+
+                    results.Add(new CreditResult
+                    {
+                        Number = count,
+                        PaymentDate = DateTime.Now.AddDays(skip),
+                        PaymentBody = body,
+                        PaymentPercent = percent,
+                        Debt = debt
+                    });
+                    skip += credit.StepPayment;
+                    count++;
+                };
+
+            }
+
+            return results;
         }
 
         /// <summary>

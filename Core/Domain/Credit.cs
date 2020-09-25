@@ -23,17 +23,14 @@ namespace CreditApplication.Core.Domain
         [Required]
         public decimal Term 
         { 
-            get 
-            {
-                return TermCredit == TermCredit.Day ? term / DAY_OF_MOUNTH : term;
-            } 
+            get => TermCredit == TermCredit.Day ? StacksCredit == StacksCredit.InYear ? term / DAY_OF_MOUNTH : term : term;
             set
             {
                 term = value;
             }
         }
         /// <summary>
-        /// Срока кредита, для вывода во вью.
+        /// Срока кредита, для вывода на view.
         /// </summary>
         public string TermText
         {
@@ -56,7 +53,7 @@ namespace CreditApplication.Core.Domain
         /// Тип ставки кредита.
         /// </summary>
         [Required]
-        public StacksCredit StacksCredit { get; set; }
+        public StacksCredit StacksCredit { get; set; } = StacksCredit.InYear;
         /// <summary>
         /// Шаг платежа в днях.
         /// </summary>

@@ -1,7 +1,7 @@
 ﻿@model CreditApplication.Models.Home.IndexViewModel
 @{
     ViewData["Title"] = "Credit Application";
-    var credit = new CreditApplication.Core.Domain.Credit();
+    var credit = new CreditApplication.Core.Domain.Credit(); 
 }
 
     <form asp-controller="Home" asp-action="Сalculate" method="post">
@@ -11,23 +11,24 @@
 
         <p><label class="">Срок кредит:</label></p>
         <p>
-            <input type="text" class="" asp-for="@credit.Term" value="12" />
-            <select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" placeholder="Месяцы или дни:"></select>
+            <input type="text" class="" asp-for="@credit.Term"/>
+            <select class="" asp-for="@credit.TermCredit" asp-items="@Model.TermTypes" ></select>
         </p>
 
         <p><label class="">Ставка в %:</label></p>
         <p>
             <input type="text" class="" asp-for="@credit.Stacks" value="22" />
-            <select class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes" placeholder="Ставка"></select>
+            <select id="changeStacks" class="" asp-for="@credit.StacksCredit" asp-items="@Model.StacksTypes"></select>
         </p>
-        @if (Model.IsDayPayment)
-        {
-            <p><label class="">Шаг платежа в днях:</label></p>
-            <p><input type="text" class="" asp-for="@credit.StepPayment" value="10" /></p>
-        }
+      
+            <p id="stepPayment" class="visually--hidden">
+                    <label class="">Шаг платежа в днях:</label>
+                    <select class="" asp-for="@credit.StepPayment" asp-items="@Model.StepPaymentTypes"></select>
+        </p>
+        
 
 
-        <p><input type="submit" value="Рассчитать" class="btn" /></p>
+        <p><input id="calculate" type="submit" value="Рассчитать" class="btn btn-light" /></p>
     </form>
 
 

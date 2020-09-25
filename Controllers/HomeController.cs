@@ -33,6 +33,7 @@ namespace CreditApplication.Controllers
             {
                 TermTypes = _calculateModelService.GetTermType(),
                 StacksTypes = _calculateModelService.GetStacksType(),
+                StepPaymentTypes = _calculateModelService.GetStepPaymentType(),
                 IsDayPayment = isDayPayment
             };
             return View(vm);
@@ -59,7 +60,7 @@ namespace CreditApplication.Controllers
             var vm = new CalculateViewModel
             {
                 Credit = credit,
-                CreditResults = _calculateService.GetCreditResult(credit)
+                CreditResults = credit.StacksCredit == StacksCredit.InDay ? _calculateService.GetCreditDaysResult(credit) : _calculateService.GetCreditMounthResult(credit)
             };          
             return View(vm);
         }       
